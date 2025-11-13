@@ -58,19 +58,16 @@ def scalar_multiplication(P, n, a, d, p):
     # Para a forma ax^2 + y^2 = 1 + dx^2y^2, (0,1) é o elemento neutro
     R = (0, 1)  # Inicializa o acumulador com o ponto neutro
 
-    # Q é o ponto que será adicionado quando um bit for '1'
-    Q = P
-
     # Itera sobre os bits da representação binária de n, do mais significativo ao menos significativo
     # bin(n)[2:] remove o prefixo '0b' da string binária
-    for bit in reversed(bin(n)[2:]):
+    for bit in bin(n)[2:]:
         # Sempre dobra o ponto acumulador (R = 2R)
         R = edwards_add(R, R, a, d, p)
         
-        # Se o bit atual for '1', adiciona o ponto Q
+        # Se o bit atual for '1', adiciona o ponto P
         if bit == '1':
-            R = edwards_add(R, Q, a, d, p)
-            
+            R = edwards_add(R, P, a, d, p)
+
     return R
     
     
@@ -104,8 +101,8 @@ def Double_and_Add(P, k, a, d, p):
         if bit_ki == '1':
             # 5: Q = Q + P {Addition}
             Q = edwards_add(Q, P, a, d, p)
-        else:
-     
+
+
     # 8: return Q
     return Q
 
